@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organisasi & Penyimpanan Komputer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Style futuristik, responsif, glassmorphism */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(26, 31, 58, 0.95));
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid #00d4ff;
+            padding: 2rem 0; box-shadow: 0 8px 32px rgba(0, 212, 255, 0.1);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-content { max-width: 1200px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+        header h1 {
+            font-size: 2.5rem; color: #00d4ff; margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); letter-spacing: 1px;
+        }
+        header p {font-size: 1.1rem; color: #b0b0b0;}
+        .container { max-width: 1200px; margin: 3rem auto; padding: 0 2rem; }
+        .storage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem; margin-bottom: 3rem;
+        }
+        .storage-card {
+            background: linear-gradient(135deg, rgba(26, 31, 58, 0.6), rgba(20, 25, 45, 0.6));
+            border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 15px; padding: 2rem;
+            backdrop-filter: blur(10px); transition: all 0.3s ease; position: relative; overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .storage-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        .storage-card:hover::before { left: 100%; }
+        .storage-card:hover {
+            border-color: rgba(0, 212, 255, 0.8);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 150, 200, 0.1));
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2); transform: translateY(-5px);
+        }
+        .storage-icon {
+            font-size: 3rem; color: #00d4ff; margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+        .storage-card h2 {
+            font-size: 1.5rem; color: #00d4ff; margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3); padding-bottom: 0.5rem;
+        }
+        .section-title {
+            font-weight: bold; color: #00ff88; margin-top: 1.2rem;
+            margin-bottom: 0.5rem; font-size: 0.95rem; text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-content { color: #d0d0d0; font-size: 0.95rem; margin-bottom: 1rem; }
+        .content-list { list-style: none; margin: 0.5rem 0 1rem 0; }
+        .content-list li {
+            padding: 0.4rem 0 0.4rem 1.5rem; position: relative; color: #c0c0c0; font-size: 0.9rem;
+        }
+        .content-list li::before {content: '▸'; position: absolute; left: 0; color: #00ff88; }
+        .advantages, .disadvantages {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;
+        }
+        .advantages-title, .disadvantages-title {
+            grid-column: 1 / -1; font-weight: bold; color: #00ff88; margin-top: 0.5rem;
+            font-size: 0.9rem; text-transform: uppercase;
+        }
+        .advantage-item, .disadvantage-item {
+            padding: 0.5rem; border-radius: 8px; font-size: 0.9rem;
+        }
+        .advantage-item {
+            background: rgba(0, 255, 136, 0.1); border-left: 3px solid #00ff88; color: #c0e0c0;
+        }
+        .disadvantage-item {
+            background: rgba(255, 100, 100, 0.1); border-left: 3px solid #ff6464; color: #e0c0c0;
+        }
+        .conclusion {
+            background: rgba(0, 212, 255, 0.05); border-left: 4px solid #00d4ff;
+            padding: 0.8rem; border-radius: 8px; margin-top: 1rem; font-size: 0.9rem;
+            color: #d0e0ff; font-style: italic;
+        }
+        .summary-section {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 150, 200, 0.1));
+            border: 2px solid rgba(0, 212, 255, 0.5); border-radius: 15px; padding: 2.5rem;
+            margin-top: 3rem; backdrop-filter: blur(10px);
+        }
+        .summary-section h2 {
+            color: #00d4ff; font-size: 2rem; margin-bottom: 1.5rem; text-align: center;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        .summary-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;
+        }
+        .summary-item {
+            background: rgba(10, 14, 39, 0.5); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #00ff88;
+        }
+        .summary-item h3 { color: #00ff88; margin-bottom: 0.5rem; font-size: 1rem; }
+        .summary-item p { color: #d0d0d0; font-size: 0.9rem; }
+        footer {
+            background: rgba(10, 14, 39, 0.95); border-top: 2px solid #00d4ff; padding: 2rem;
+            text-align: center; margin-top: 4rem; color: #808080;
+        }
+        .footer-accent { color: #00d4ff; font-weight: bold; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .storage-grid { grid-template-columns: 1fr; }
+            .advantages, .disadvantages { grid-template-columns: 1fr; }
+            .summary-grid { grid-template-columns: 1fr; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);}
+            50% { text-shadow: 0 0 30px rgba(0, 212, 255, 0.8);}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="glow"><i class="fas fa-microchip"></i> Organisasi & Penyimpanan Komputer</h1>
+            <p>Memahami Jenis-Jenis Media Penyimpanan Sekunder</p>
+        </div>
+    </header>
+    <div class="container">
+        <div class="storage-grid">
+            <!-- HDD -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-hard-drive"></i></div>
+                <h2>Hard Disk Drive (HDD)</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Hard Disk Drive (HDD) adalah <strong>media penyimpanan magnetik</strong> yang berfungsi menyimpan data secara permanen di komputer atau laptop. Data tersimpan di piringan logam yang berputar cepat, dan dibaca oleh kepala pembaca (head) menggunakan prinsip magnetik.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan sistem operasi, aplikasi, dan file pengguna</li>
+                    <li>Sebagai tempat backup data</li>
+                    <li>Menjadi penyimpanan utama komputer</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Kapasitas besar</div>
+                    <div class="advantage-item">Harga terjangkau</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Kecepatan lambat</div>
+                    <div class="disadvantage-item">Mudah rusak jika terguncang</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> HDD masih banyak digunakan karena kapasitasnya besar dan ekonomis, meskipun kecepatannya kalah dibanding SSD.
+                </div>
+            </div>
+            <!-- SSD -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-bolt"></i></div>
+                <h2>Solid State Drive (SSD)</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Solid State Drive (SSD) adalah <strong>penyimpanan data berbasis chip memori flash</strong>, tanpa menggunakan piringan berputar. SSD menyimpan data dalam sel memori elektronik, mirip seperti flashdisk namun dengan performa lebih tinggi.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan sistem operasi dan program agar komputer bekerja lebih cepat</li>
+                    <li>Mengganti HDD pada laptop modern</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Cepat</div>
+                    <div class="advantage-item">Tahan guncangan</div>
+                    <div class="advantage-item">Hemat energi</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Harga lebih mahal</div>
+                    <div class="disadvantage-item">Kapasitas lebih kecil dari HDD</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> SSD menjadi pilihan utama bagi pengguna yang membutuhkan kecepatan tinggi dan efisiensi, terutama pada laptop dan PC modern.
+                </div>
+            </div>
+            <!-- NVMe -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-rocket"></i></div>
+                <h2>NVMe (Non-Volatile Memory Express)</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    NVMe adalah <strong>generasi lanjutan dari SSD</strong> yang menggunakan jalur PCI Express (PCIe). Teknologi ini memungkinkan kecepatan transfer data sangat tinggi, jauh melampaui SSD SATA biasa.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan data dengan kecepatan tinggi</li>
+                    <li>Cocok untuk gaming, desain grafis, dan server</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Super cepat</div>
+                    <div class="advantage-item">Responsif</div>
+                    <div class="advantage-item">Efisien</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Harga lebih mahal</div>
+                    <div class="disadvantage-item">Membutuhkan motherboard dengan slot NVMe</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> NVMe adalah solusi terbaik untuk pengguna yang membutuhkan performa tinggi dan efisiensi waktu dalam mengakses data besar.
+                </div>
+            </div>
+            <!-- Optical Disk -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-compact-disc"></i></div>
+                <h2>Optical Disk</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Optical Disk adalah <strong>media penyimpanan berbasis laser</strong> yang digunakan untuk membaca dan menulis data. Contohnya yaitu <strong>CD, DVD, dan Blu-ray Disc</strong>.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan film, musik, atau arsip data</li>
+                    <li>Digunakan untuk distribusi perangkat lunak</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Harga murah</div>
+                    <div class="advantage-item">Bisa digunakan berkali-kali (RW)</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Kapasitas kecil</div>
+                    <div class="disadvantage-item">Mudah tergores</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> Meskipun penggunaannya menurun, optical disk masih digunakan untuk keperluan distribusi dan backup jangka panjang.
+                </div>
+            </div>
+            <!-- Flash Drive -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-usb"></i></div>
+                <h2>Flash Drive (USB Flashdisk)</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Flash Drive atau Flashdisk adalah <strong>perangkat penyimpanan portabel</strong> berbasis memori flash yang dihubungkan melalui port USB.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Memindahkan data antar komputer</li>
+                    <li>Menyimpan dokumen, musik, dan foto</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Kecil</div>
+                    <div class="advantage-item">Mudah dibawa</div>
+                    <div class="advantage-item">Tidak memerlukan daya tambahan</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Mudah hilang</div>
+                    <div class="disadvantage-item">Rentan terhadap virus</div>
+                    <div class="disadvantage-item">Kapasitas terbatas</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> Flashdisk sangat praktis untuk menyimpan dan memindahkan data dalam jumlah kecil hingga sedang.
+                </div>
+            </div>
+            <!-- External Hard Disk -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-database"></i></div>
+                <h2>External Hard Disk</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    External Hard Disk adalah <strong>harddisk eksternal</strong> yang dihubungkan ke komputer melalui kabel USB. Umumnya digunakan untuk penyimpanan tambahan atau backup.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan data penting di luar komputer</li>
+                    <li>Media backup untuk file besar</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Kapasitas besar</div>
+                    <div class="advantage-item">Mudah digunakan</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Lebih lambat dari HDD internal</div>
+                    <div class="disadvantage-item">Mudah rusak bila jatuh</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> External Hard Disk menjadi solusi ideal bagi pengguna yang membutuhkan penyimpanan besar dan portabel.
+                </div>
+            </div>
+            <!-- Memory Card -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-sd-card"></i></div>
+                <h2>Memory Card (Kartu Memori)</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Memory Card adalah <strong>media penyimpanan kecil berbasis flash memory</strong>, digunakan pada perangkat seperti kamera digital, smartphone, dan drone.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan foto, video, dan aplikasi</li>
+                    <li>Memperluas kapasitas penyimpanan perangkat</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Ukuran kecil</div>
+                    <div class="advantage-item">Ringan</div>
+                    <div class="advantage-item">Mudah dipindahkan</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Mudah rusak jika sering dicabut</div>
+                    <div class="disadvantage-item">Kapasitas terbatas</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> Kartu memori sangat berguna untuk perangkat portabel yang membutuhkan penyimpanan tambahan dalam ukuran kecil.
+                </div>
+            </div>
+            <!-- Magnetic Tape -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-tape"></i></div>
+                <h2>Magnetic Tape</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Magnetic Tape adalah <strong>media penyimpanan data berbentuk pita magnetik</strong> yang digunakan untuk backup dan arsip data jangka panjang.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan data cadangan pada skala besar</li>
+                    <li>Digunakan di lembaga, bank, dan perusahaan besar</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Tahan lama</div>
+                    <div class="advantage-item">Murah untuk penyimpanan besar</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Akses data lambat</div>
+                    <div class="disadvantage-item">Tidak praktis untuk penggunaan harian</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> Meskipun tergolong teknologi lama, magnetic tape masih digunakan untuk kebutuhan backup besar karena ketahanannya.
+                </div>
+            </div>
+            <!-- Cloud Storage -->
+            <div class="storage-card">
+                <div class="storage-icon"><i class="fas fa-cloud"></i></div>
+                <h2>Cloud Storage (Penyimpanan Awan)</h2>
+                <div class="section-title">Pengertian</div>
+                <div class="section-content">
+                    Cloud Storage adalah <strong>media penyimpanan online</strong> yang memungkinkan pengguna menyimpan data di server internet dan mengaksesnya dari mana saja. Contohnya: <strong>Google Drive</strong>, <strong>Dropbox</strong>, <strong>OneDrive</strong>.
+                </div>
+                <div class="section-title">Fungsi</div>
+                <ul class="content-list">
+                    <li>Menyimpan file secara online</li>
+                    <li>Memudahkan akses data dari berbagai perangkat</li>
+                    <li>Sebagai backup tambahan jika penyimpanan fisik rusak</li>
+                </ul>
+                <div class="section-title">Kelebihan & Kekurangan</div>
+                <div class="advantages">
+                    <div class="advantages-title">✓ Kelebihan</div>
+                    <div class="advantage-item">Akses mudah</div>
+                    <div class="advantage-item">Bisa dibuka kapan pun</div>
+                    <div class="advantage-item">Tidak butuh perangkat tambahan</div>
+                    <div class="disadvantages-title">✗ Kekurangan</div>
+                    <div class="disadvantage-item">Butuh koneksi internet</div>
+                    <div class="disadvantage-item">Ada risiko keamanan data</div>
+                </div>
+                <div class="conclusion">
+                    <i class="fas fa-info-circle"></i> Cloud storage merupakan solusi modern yang efisien untuk menyimpan dan berbagi data secara fleksibel melalui internet.
+                </div>
+            </div>
+        </div>
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2><i class="fas fa-check-double"></i> Kesimpulan Umum</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #d0d0d0;">
+                Memori sekunder berfungsi penting dalam sistem komputer untuk menyimpan data secara permanen. Setiap jenis memiliki karakteristik berbeda dengan keunggulan dan keterbatasan masing-masing.
+            </p>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h3><i class="fas fa-box"></i> Kapasitas Besar</h3>
+                    <p>HDD dan External Hard Disk cocok untuk kebutuhan penyimpanan besar dengan harga ekonomis.</p>
+                </div>
+                <div class="summary-item">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performa Tinggi</h3>
+                    <p>SSD dan NVMe menawarkan kecepatan transfer data yang jauh lebih tinggi untuk aplikasi demanding.</p>
+                </div>
+                <div class="summary-item">
+                    <h3><i class="fas fa-suitcase-rolling"></i> Portabilitas</h3>
+                    <p>Flashdisk dan Memory Card ideal untuk pengguna mobile yang membutuhkan mobilitas dan fleksibilitas.</p>
+                </div>
+                <div class="summary-item">
+                    <h3><i class="fas fa-archive"></i> Arsip Jangka Panjang</h3>
+                    <p>Optical Disk dan Magnetic Tape digunakan untuk kebutuhan backup dan arsip data jangka panjang.</p>
+                </div>
+                <div class="summary-item">
+                    <h3><i class="fas fa-globe"></i> Akses Fleksibel</h3>
+                    <p>Cloud Storage memberikan kemudahan akses dari mana saja dengan koneksi internet yang stabil.</p>
+                </div>
+                <div class="summary-item">
+                    <h3><i class="fas fa-microchip"></i> Teknologi Terdepan</h3>
+                    <p>Pilih sesuai kebutuhan: kapasitas, kecepatan, portabilitas, durabilitas, atau fleksibilitas akses.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p><i class="fas fa-copyright"></i> 2025 - Organisasi & Penyimpanan Komputer</p>
+        <p>Referensi: <span class="footer-accent">Artikel Teknik Komputer - Media Penyimpanan Sekunder</span></p>
+        <p style="font-size: 0.85rem; margin-top: 1rem; color: #606060;">Dirancang dengan teknologi web modern untuk pengalaman membaca yang optimal</p>
+    </footer>
+</body>
+</html>
